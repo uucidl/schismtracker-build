@@ -26,6 +26,7 @@ Unity('schism-unity')
     .CompilerOptions + ' -Ischismtracker-assist/'
     .CompilerOptions + ' -Ischismtracker/sys/win32'
     .CompilerOptions + ' -D_CRT_SECURE_NO_WARNINGS'
+    .CompilerOptions + ' -DVERSION=\"\"'
 ]
 
 ObjectList('schism-split')
