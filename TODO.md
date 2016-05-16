@@ -1,5 +1,13 @@
 # Platform Layer TODO
 
+## UNISTD dependency: STDIN_FILENO
+
+../schism/slurp.c:195:23: error: use of undeclared identifier 'STDIN_FILENO'
+
+                if (_slurp_stdio(t, STDIN_FILENO))
+
+This is the posix file descriptor equivalent to the C standard stdin FILE* handle.
+                
 ## Use of PATH_MAX to define arrays containing paths
 
 Note: GNU libc claims that PATH_MAX is supposed to include the \0 terminator. So below whenever we see PATH_MAX + 1 we are producing a potentially too long filename.
