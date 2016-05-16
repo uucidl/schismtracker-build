@@ -5,6 +5,8 @@ build schismtracker with MSVC.
 
 ** UNISTD dependency: STDIN_FILENO
 
+- [schismtracker/schism/slurp.c]
+
 #+begin_example
 ../schism/slurp.c:195:23: error: use of undeclared identifier 'STDIN_FILENO'
 
@@ -23,6 +25,35 @@ This constant is anyway problematic, because it would depend from filesystem to 
 Microsoft has a constant MAX_PATH that represents the maximum (260) that the traditional DOS paths can have. It also includes the nul terminator.
 
 In headers.h there is also NAME_MAX which is set to MAXPATHLEN or FILENAME_MAX
+
+List of files referencing it:
+
+- [schismtracker/include/disko.h]
+- [schismtracker/schism/audio_loadsave.c]
+- [schismtracker/schism/config.c]
+- [schismtracker/schism/disko.c]
+- [schismtracker/schism/main.c]
+- [schismtracker/schism/page_loadinst.c]
+- [schismtracker/schism/page_loadmodule.c]
+- [schismtracker/schism/page_loadsample.c]
+- [schismtracker/schism/page_vars.c]
+- [schismtracker/schism/util.c]
+
+Types of usage:
+- char buffer declaration (with sometimes incorrect =+ 1=)
+- unsafe, truncating "procrustean" char buffer copy (strncpy)
+- used as parameter to other copy functions (=cfg_get_string=)
+- check for overflow
+
+At first glance those usages appear unsafe in the global if there's
+no real check after the filepath is constructed that it wasn't truncated.
+
+Having a char buffer type dedicated to filepath might help if the usage code
+somehow checks that it is valid and is able to report that to the users.
+
+What proportion of those paths are produced after an interaction with the user?
+What proportion of those paths are constructed later, where it would be cumbersome
+to report an error?
 
 Now on to the full list of references:
 
@@ -116,7 +147,6 @@ Line 377: 	if ((ISFS_MAXPATHLEN * fileCount) > BUFFER_SIZE) return false;
 
 H:\3rdparty\schismtracker-build\schismtracker\sys\wii\isfs.h (1 hit)
 Line 34: #define ISFS_MAXPATHLEN (ISFS_MAXPATH + 1)
-H:\3rdparty\schismtracker-build\TODO.md (1 hit)
 
 H:\3rdparty\schismtracker-build\schismtracker\schism\main.c:1113:41: error: use of undeclared identifier 'PATH_MAX'
   strncpy(cfg_dir_modules, initial_dir, PATH_MAX);
@@ -155,11 +185,9 @@ H:\3rdparty\schismtracker-build\schismtracker\schism\page_loadinst.c:146:25: err
 H:\3rdparty\schismtracker-build\schismtracker\schism\page_loadinst.c:147:11: error: use of undeclared identifier 'PATH_MAX'
  inst_cwd[PATH_MAX] = 0;
           ^
-In file included from H:\3rdparty\schismtracker-build\build\schismtracker-unity\Unity1.c:86:
 H:\3rdparty\schismtracker-build\schismtracker\schism\page_loadinst.c:407:28: error: use of undeclared identifier 'PATH_MAX'
    if (slash_search_mode < PATH_MAX) {
                            ^
-In file included from H:\3rdparty\schismtracker-build\build\schismtracker-unity\Unity1.c:89:
 H:\3rdparty\schismtracker-build\schismtracker\schism\page_loadmodule.c:125:28: error: use of undeclared identifier 'PATH_MAX'
 static char filename_entry[PATH_MAX + 1] = "";
                            ^
@@ -692,7 +720,6 @@ C:\Program Files (x86)\Windows Kits\10\include\10.0.10240.0\ucrt\stdlib.h:1349:3
 
 ** Unity build warnings
 
-
 #+begin_example
 H:\3rdparty\schismtracker-build\schismtracker\schism\keyboard.c:582:16: error: static variable 'current_octave' is used in an inline function with external linkage [-Werror,-Wstatic-in-inline]
  note += (12 * current_octave);
@@ -976,7 +1003,9 @@ static const char *whitespace = " \t\v\r\n";
 ** Other warnings
 
 #+begin_example
-H:\3rdparty\schismtracker-build\schismtracker\schism\isysev.c:1122:67: error: comparison of constant 256 with expression of type 'Uint8' (aka 'unsigned char') is always false [-Werror,-Wtautological-constant-out-of-range-compare]
+H:\3rdparty\schismtracker-build\schismtracker\schism\isysev.c:1122:67: error: comparison
+of constant 256 with expression of type 'Uint8' (aka 'unsigned char') is always false
+[-Werror,-Wtautological-constant-out-of-range-compare]
    if (sdlev.jbutton.which > SKDEV_ID_MAX || sdlev.jbutton.button > 256)
 #+end_example
 
