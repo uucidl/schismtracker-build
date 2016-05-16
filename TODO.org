@@ -41,7 +41,7 @@ List of files referencing it:
 
 Types of usage:
 - char buffer declaration (with sometimes incorrect =+ 1=)
-- unsafe, truncating "procrustean" char buffer copy (strncpy)
+- unsafe, truncating char buffer copy (strncpy) which does not preserve c-strings
 - used as parameter to other copy functions (=cfg_get_string=)
 - check for overflow
 
@@ -54,6 +54,14 @@ somehow checks that it is valid and is able to report that to the users.
 What proportion of those paths are produced after an interaction with the user?
 What proportion of those paths are constructed later, where it would be cumbersome
 to report an error?
+
+audio_loadsave.c: interestingly here we copy most of the time a filepath that already
+exists, so the filepath better be large enough already! We also notice that the procedure
+=song_set_filename= does a safe truncating copy of the initial filename. (i.e. adding a
+\0 at the end)
+config.c: safe truncating copies
+disko.c: we check if filenames are bigger than PATH_MAX - 6 and otherwise fail to open files.
+The -6 is never explained!
 
 Now on to the full list of references:
 
