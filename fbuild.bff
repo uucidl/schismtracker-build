@@ -20,6 +20,7 @@ Unity('schism-unity')
     .CompilerOptions + ' -Wno-self-assign'
     .CompilerOptions + ' -Wno-incompatible-pointer-types'
     .CompilerOptions + ' -Wno-int-conversion'
+    .CompilerOptions + ' -ferror-limit=0' ;; we want to see all errors
     .CompilerOptions + ' -Ischismtracker/include'
     .CompilerOptions + ' -I$SDL_HOME$/include'
     .CompilerOptions + ' -Ischismtracker-assist/'
@@ -34,6 +35,7 @@ ObjectList('schism-split')
     .CompilerInputPattern = '*.c'
 }
 
+;; It will be interesting to test once everything builds as split translation units
 ObjectList('schism')
 {
     Using(.SchismConfig)
@@ -42,5 +44,5 @@ ObjectList('schism')
 
 Alias('All')
 {
-    .Targets = { 'schism' }
+    .Targets = { 'schism-split' }
 }
