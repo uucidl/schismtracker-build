@@ -5,11 +5,11 @@ build schismtracker with MSVC.
 
 ** UNISTD dependency: STDIN_FILENO
 
-#+begin_verbatim
+#+begin_example
 ../schism/slurp.c:195:23: error: use of undeclared identifier 'STDIN_FILENO'
 
                 if (_slurp_stdio(t, STDIN_FILENO))
-#+end_verbatim
+#+end_example
 
 This is the posix file descriptor equivalent to the C standard stdin FILE* handle.
                 
@@ -26,7 +26,7 @@ In headers.h there is also NAME_MAX which is set to MAXPATHLEN or FILENAME_MAX
 
 Now on to the full list of references:
 
-#+begin_verbatim
+#+begin_example
 schismtracker/include/disko.h:39:16: error: use of undeclared identifier 'PATH_MAX'
  char tempname[PATH_MAX];
                ^
@@ -271,7 +271,7 @@ H:\3rdparty\schismtracker-build\schismtracker\schism\util.c:629:18: error: use o
 H:\3rdparty\schismtracker-build\schismtracker\schism\util.c:637:11: error: use of undeclared identifier 'PATH_MAX'
  char buf[PATH_MAX + 1];
           ^
-#+end_verbatim
+#+end_example
 
 ** Time: struct timeval / gettimeofday / tzset
 
@@ -318,7 +318,7 @@ schismtracker/include\sndfile.h:588:9: note: forward declaration of 'struct time
 
 There seems to be a str_dup somewhere in the codebase
 
-#+begin_verbatim
+#+begin_example
 H:\3rdparty\schismtracker-build\schismtracker\schism\util.c:643:10: error: 'strdup' is deprecated: The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _strdup. See online help for details. [-Werror,-Wdeprecated-declarations]
   return strdup(buf);
          ^
@@ -384,11 +384,11 @@ C:\Program Files (x86)\Windows Kits\10\include\10.0.10240.0\ucrt\string.h:552:28
 In file included from H:\3rdparty\schismtracker-build\build\schismtracker-unity\Unity1.c:29:
 H:\3rdparty\schismtracker-build\schismtracker\schism\dmoz.c:783:25: error: incomplete definition of type 'struct direct'
    namlen = strlen((ent)->d_name);
-#+end_verbatim
+#+end_example
 
 ** File System Queries & Manipulation
 
-#+begin_verbatim
+#+begin_example
 H:\3rdparty\schismtracker-build\schismtracker\schism\util.c:733:6: error: implicit declaration of function 'chdir' is invalid in C99 [-Werror,-Wimplicit-function-declaration]
  if (chdir(dir) == -1) return 0;
      ^
@@ -541,11 +541,11 @@ H:\3rdparty\schismtracker-build\schismtracker\schism\dmoz.c:782:25: error: use o
 C:\Program Files (x86)\Windows Kits\10\include\10.0.10240.0\ucrt\stdlib.h:293:39: note: 'div' declared here
                         div_t __cdecl div ( int _Numerator, int _Denominator);
                                       ^
-#+end_verbatim
+#+end_example
 
 ** File I/O
 
-#+begin_verbatim
+#+begin_example
 In file included from H:\3rdparty\schismtracker-build\build\schismtracker-unity\Unity1.c:140:
 H:\3rdparty\schismtracker-build\schismtracker\schism\slurp.c:195:23: error: use of undeclared identifier 'STDIN_FILENO'
   if (_slurp_stdio(t, STDIN_FILENO))
@@ -582,11 +582,11 @@ H:\3rdparty\schismtracker-build\schismtracker\schism\disko.c:261:3: note: did yo
 C:\Program Files (x86)\Windows Kits\10\include\10.0.10240.0\ucrt\stdio.h:144:22: note: 'fclose' declared here
          int __cdecl fclose(
                      ^
-#+end_verbatim
+#+end_example
 
 ** Getopt API (Command Line Parsing)
 
-#+begin_verbatim
+#+begin_example
 In file included from H:\3rdparty\schismtracker-build\build\schismtracker-unity\Unity1.c:50:
 H:\3rdparty\schismtracker-build\schismtracker\schism\main.c:266:28: error: array has incomplete element type 'struct option'
  struct option long_options[] = {
@@ -596,11 +596,11 @@ H:\3rdparty\schismtracker-build\schismtracker\schism\main.c:266:9: note: forward
         ^
 H:\3rdparty\schismtracker-build\schismtracker\schism\main.c:308:16: error: implicit declaration of function 'getopt_long' is invalid in C99 [-Werror,-Wimplicit-function-declaration]
  while ((opt = getopt_long(argc, argv, "a:v:fFpPh", long_options, ((void *)0))) != -1) {
-#+end_verbatim
+#+end_example
                
 ** OS Environment Variables
 
-#+begin_verbatim
+#+begin_example
 H:\3rdparty\schismtracker-build\schismtracker\schism\video.c:496:3: error: 'putenv' is deprecated: The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _putenv. See online help for details. [-Werror,-Wdeprecated-declarations]
   putenv("SDL_VIDEODRIVER=windib");
   ^
@@ -684,7 +684,7 @@ H:\3rdparty\schismtracker-build\schismtracker\schism\util.c:701:6: error: 'puten
 C:\Program Files (x86)\Windows Kits\10\include\10.0.10240.0\ucrt\stdlib.h:1349:30: note: 'putenv' has been explicitly marked deprecated here
                  int __cdecl putenv(
                              ^
-#+end_verbatim
+#+end_example
 
 ** Date Parsing & Formatting
 ** Unclassified
@@ -692,16 +692,16 @@ C:\Program Files (x86)\Windows Kits\10\include\10.0.10240.0\ucrt\stdlib.h:1349:3
 
 Basic build:
 
-#+begin_verbatim
+#+begin_example
 In file included from H:\3rdparty\schismtracker-build\build\schismtracker-unity\Unity1.c:152:
 H:\3rdparty\schismtracker-build\schismtracker\schism\version.c:98:17: error: use of undeclared identifier 'VERSION'
  ret = strptime(VERSION, "%Y %m %d", version);
-#+end_verbatim
+#+end_example
 
 ** Unity build warnings
 
 
-#+begin_verbatim
+#+begin_example
 H:\3rdparty\schismtracker-build\schismtracker\schism\keyboard.c:582:16: error: static variable 'current_octave' is used in an inline function with external linkage [-Werror,-Wstatic-in-inline]
  note += (12 * current_octave);
                ^
@@ -953,10 +953,10 @@ static void do_nil(void) {}
 H:\3rdparty\schismtracker-build\schismtracker\schism\itf.c:1101:13: note: previous definition is here
 static void do_nil(void) {}
             ^
-#+end_verbatim
+#+end_example
 ** Static In Inline
 
-#+begin_verbatim
+#+begin_example
 H:\3rdparty\schismtracker-build\schismtracker\schism\util.c:330:26: error: static variable 'whitespace' is 
 used in an inline function with external linkage [-Werror,-Wstatic-in-inline]
  while (len > 0 && index(whitespace, s[len]))
@@ -979,12 +979,12 @@ static
 H:\3rdparty\schismtracker-build\schismtracker\schism\util.c:314:20: note: 'whitespace' declared here
 static const char *whitespace = " \t\v\r\n";
                    ^
-#+end_verbatim
+#+end_example
 
 ** Other warnings
 
-#+begin_verbatim
+#+begin_example
 H:\3rdparty\schismtracker-build\schismtracker\schism\isysev.c:1122:67: error: comparison of constant 256 with expression of type 'Uint8' (aka 'unsigned char') is always false [-Werror,-Wtautological-constant-out-of-range-compare]
    if (sdlev.jbutton.which > SKDEV_ID_MAX || sdlev.jbutton.button > 256)
-#+end_verbatim
+#+end_example
 
