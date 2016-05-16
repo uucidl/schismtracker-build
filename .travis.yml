@@ -3,7 +3,7 @@ matrix:
   include:
     - compiler: clang
       os: osx
-      env: CFLAGS="-Weverything -Wno-padded"
+      env: CFLAGS="-Weverything -Wno-padded -Wno-sign-conversion -Wno-conversion -Wno-cast-align -Wno-undef -Wno-switch-enum"
       before_install: brew update && brew install sdl
     - compiler: gcc
       os: linux
