@@ -1,0 +1,46 @@
+#include "msvc.bff"
+
+Using(.MSVC_Clang_x86_64)
+.CompilerOutputPath = '/build/schismtracker-obj/'
+.UnityOutputPath = '/build/schismtracker-unity/'
+
+#import SDL_HOME
+
+Unity('schism-unity')
+{
+    .UnityInputPath = 'schismtracker/schism'
+    .UnityInputPattern = '*.c'
+    .UnityOutputPattern = 'Unity*.c' ;; ensure we produce .c files
+}
+
+.SchismConfig =
+[
+    .CompilerOptions + ' -Wno-macro-redefined'
+    .CompilerOptions + ' -Wno-#pragma-messages'
+    .CompilerOptions + ' -Wno-self-assign'
+    .CompilerOptions + ' -Wno-incompatible-pointer-types'
+    .CompilerOptions + ' -Wno-int-conversion'
+    .CompilerOptions + ' -Ischismtracker/include'
+    .CompilerOptions + ' -I$SDL_HOME$/include'
+    .CompilerOptions + ' -Ischismtracker-assist/'
+    .CompilerOptions + ' -Ischismtracker/sys/win32'
+    .CompilerOptions + ' -D_CRT_SECURE_NO_WARNINGS'
+]
+
+ObjectList('schism-split')
+{
+    Using(.SchismConfig)
+    .CompilerInputPath = 'schismtracker/schism'
+    .CompilerInputPattern = '*.c'
+}
+
+ObjectList('schism')
+{
+    Using(.SchismConfig)
+    .CompilerInputUnity = 'schism-unity'
+}
+
+Alias('All')
+{
+    .Targets = { 'schism' }
+}

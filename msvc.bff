@@ -1,0 +1,52 @@
+#import UniversalCRTSdkDir
+#import UCRTVersion
+#import VCINSTALLDIR
+#import VSINSTALLDIR
+#import WindowsSdkDir
+.VSBasePath = '$VSINSTALLDIR$'
+.VCBasePath = '$VCINSTALLDIR$'
+.WindowsSDKBasePath = '$WindowsSdkDir$'
+.WindowsUCRTIncludePath = '$UniversalCRTSdkDir$/include/$UCRTVersion$/ucrt'
+
+Compiler('MSVC-x86_64')
+{
+  .Root   = '$VCBasePath$\bin'
+  .Executable = '$Root$\amd64\cl.exe'
+  .ExtraFiles = {
+    '$Root$\amd64\c1.dll'
+    '$Root$\amd64\c1xx.dll',
+    '$Root$\amd64\c2.dll',
+    '$Root$\amd64\1033\clui.dll'
+    '$Root$\msobj140.dll'
+    '$Root$\mspdb140.dll'
+    '$Root$\mspdbsrv.exe'
+    '$Root$\mspdbcore.dll'
+    '$Root$\mspft140.dll'
+    '$VCBasePath$\redist\x64\Microsoft.VC140.CRT\msvcp140.dll'
+    '$VCBasePath$\redist\x64\Microsoft.VC140.CRT\vcruntime140.dll'
+    '$VCBasePath$\redist\x64\Microsoft.VC140.CRT\vccorlib140.dll'
+  }
+}
+
+Compiler('MSVC-Clang-x86_64')
+{
+  .Root   = '$VCBasePath$\Clang 3.7'
+  .Executable = '$Root$\bin\x86\clang.exe'
+  .ExtraFiles = {
+    '$Root$\bin\x86\amd64\c2.dll'
+  }
+}
+
+.MSVC_x86_64 =
+[
+    .Compiler = 'MSVC-x86_64'
+    .CompilerOptions = '/Fo"%2" "%1" /Z7 /nologo /c /W4 /WX'
+    .CompilerOptions + ' -DWIN32'
+]
+
+.MSVC_Clang_x86_64 =
+[
+    .Compiler = 'MSVC-Clang-x86_64'
+    .CompilerOptions = '-o"%2" "%1" -c -Wall -Werror'
+    .CompilerOptions + ' -DWIN32'
+]
