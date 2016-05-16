@@ -1,0 +1,3 @@
+[submodule "schismtracker"]
+	path = schismtracker
+	url = https://github.com/uucidl/schismtracker.git
