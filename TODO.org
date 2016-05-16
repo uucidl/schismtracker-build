@@ -275,6 +275,7 @@ H:\3rdparty\schismtracker-build\schismtracker\schism\util.c:637:11: error: use o
 
 ** Time: struct timeval / gettimeofday / tzset
 
+#+begin_example
 H:\3rdparty\schismtracker-build\schismtracker\schism\audio_loadsave.c:707:17: error: variable has incomplete type 'struct timeval'
  struct timeval savetime, elapsed;
 
@@ -312,7 +313,7 @@ static struct timeval export_start_time;
 schismtracker/include\sndfile.h:588:9: note: forward declaration of 'struct timeval'
  struct timeval editstart;
         ^
-                                                                                                                                                                                         ^
+#+end_example
 
 ** String manipulation
 
@@ -686,7 +687,6 @@ C:\Program Files (x86)\Windows Kits\10\include\10.0.10240.0\ucrt\stdlib.h:1349:3
                              ^
 #+end_example
 
-** Date Parsing & Formatting
 ** Unclassified
 * Other TODO
 
