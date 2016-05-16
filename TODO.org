@@ -5,9 +5,11 @@ build schismtracker with MSVC.
 
 ** UNISTD dependency: STDIN_FILENO
 
+#+begin_verbatim
 ../schism/slurp.c:195:23: error: use of undeclared identifier 'STDIN_FILENO'
 
                 if (_slurp_stdio(t, STDIN_FILENO))
+#+end_verbatim
 
 This is the posix file descriptor equivalent to the C standard stdin FILE* handle.
                 
@@ -24,6 +26,7 @@ In headers.h there is also NAME_MAX which is set to MAXPATHLEN or FILENAME_MAX
 
 Now on to the full list of references:
 
+#+begin_verbatim
 schismtracker/include/disko.h:39:16: error: use of undeclared identifier 'PATH_MAX'
  char tempname[PATH_MAX];
                ^
@@ -268,6 +271,8 @@ H:\3rdparty\schismtracker-build\schismtracker\schism\util.c:629:18: error: use o
 H:\3rdparty\schismtracker-build\schismtracker\schism\util.c:637:11: error: use of undeclared identifier 'PATH_MAX'
  char buf[PATH_MAX + 1];
           ^
+#+end_verbatim
+
 ** Time: struct timeval / gettimeofday / tzset
 
 H:\3rdparty\schismtracker-build\schismtracker\schism\audio_loadsave.c:707:17: error: variable has incomplete type 'struct timeval'
