@@ -690,14 +690,6 @@ C:\Program Files (x86)\Windows Kits\10\include\10.0.10240.0\ucrt\stdlib.h:1349:3
 ** Unclassified
 * Other TODO
 
-Basic build:
-
-#+begin_example
-In file included from H:\3rdparty\schismtracker-build\build\schismtracker-unity\Unity1.c:152:
-H:\3rdparty\schismtracker-build\schismtracker\schism\version.c:98:17: error: use of undeclared identifier 'VERSION'
- ret = strptime(VERSION, "%Y %m %d", version);
-#+end_example
-
 ** Unity build warnings
 
 

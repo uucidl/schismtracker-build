@@ -26,6 +26,8 @@ Unity('schism-unity')
     .CompilerOptions + ' -Ischismtracker-assist/'
     .CompilerOptions + ' -Ischismtracker/sys/win32'
     .CompilerOptions + ' -D_CRT_SECURE_NO_WARNINGS'
+    ;; TODO(uucidl): VERSION define should reflect the last commit date.
+    ;; Doesn't that retrigger needless recompilation by the way?
     .CompilerOptions + ' -DVERSION=\"\"'
 ]
 
