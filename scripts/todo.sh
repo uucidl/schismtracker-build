@@ -28,5 +28,8 @@ HERE="$(dirname "${0}")"
 
 source "${HERE}"/lib/pipelines.sh
 
-git --no-pager -C "${TOP}" grep --full-name -n -A 3 'TODO|FIXME' -- src/* | \
-    prepend_top_grep_pipeline "${TOP}" | remove_leading_spaces_grep_pipeline | onlymatches_pipeline "${ONLY_MATCHES}" "TODO(.*"
+RE='\(\(FIXME\)\|\(TODO\)\)\((.*)\)\?'
+git --no-pager -C "${TOP}" grep --full-name -n -A 3 "${RE}" -- "*" | \
+    prepend_top_grep_pipeline "${TOP}" | \
+    remove_leading_spaces_grep_pipeline | \
+    onlymatches_pipeline "${ONLY_MATCHES}" "\(${RE}\):.*"
