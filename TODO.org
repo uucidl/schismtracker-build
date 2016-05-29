@@ -311,6 +311,9 @@ H:\3rdparty\schismtracker-build\schismtracker\schism\util.c:637:11: error: use o
 
 ** Time: struct timeval / gettimeofday / tzset
 
+Problem: timeval is defined for MSVC with the winsock implementation. The first argument,
+seconds, is only a 32bit long. This is not really good for an actual absolute unix epoch time.
+
 #+begin_example
 H:\3rdparty\schismtracker-build\schismtracker\schism\audio_loadsave.c:707:17: error: variable has incomplete type 'struct timeval'
  struct timeval savetime, elapsed;
