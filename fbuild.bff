@@ -20,6 +20,7 @@ Unity('schism-unity')
     .CompilerOptions + ' -Wno-self-assign'
     .CompilerOptions + ' -Wno-incompatible-pointer-types'
     .CompilerOptions + ' -Wno-int-conversion'
+    .CompilerOptions + ' -Wno-tautological-constant-out-of-range-compare'
     .CompilerOptions + ' -ferror-limit=0' ;; we want to see all errors
     .CompilerOptions + ' -Ischismtracker/include'
     .CompilerOptions + ' -I$SDL_HOME$/include'
