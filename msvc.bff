@@ -33,7 +33,9 @@ Compiler('MSVC-Clang-x86_64')
   .Root   = '$VCBasePath$\Clang 3.7'
   .Executable = '$Root$\bin\x86\clang.exe'
   .ExtraFiles = {
-    '$Root$\bin\x86\amd64\c2.dll'
+    '$Root$\bin\x86\amd64\c2.dll',
+    '$VCBasePath$\bin\msobj140.dll',
+    '$VCBasePath$\bin\pgodb140.dll',
   }
 }
 
@@ -49,4 +51,8 @@ Compiler('MSVC-Clang-x86_64')
     .Compiler = 'MSVC-Clang-x86_64'
     .CompilerOptions = '-o"%2" "%1" -c -Wall -Werror'
     .CompilerOptions + ' -DWIN32'
+    .Linker = '$VCBasePath$\bin\link.exe'
+    .LinkerOptions = ' /WX /NOLOGO /INCREMENTAL:NO /OUT:"%2" "%1" /DEBUG'
+    .LinkerOptions + ' /MACHINE:x64'
+    .CompilerOptions + ' -m64'
 ]
