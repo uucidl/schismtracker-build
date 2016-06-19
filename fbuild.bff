@@ -21,6 +21,9 @@ Unity('schism-unity')
     .CompilerOptions + ' -Wno-incompatible-pointer-types'
     .CompilerOptions + ' -Wno-int-conversion'
     .CompilerOptions + ' -Wno-tautological-constant-out-of-range-compare'
+    .CompilerOptions + ' -Wno-deprecated-declarations'
+    ;; TODO(uucidl): ignore unused functions for now, remove that one later
+    .CompilerOptions + ' -Wno-unused-function'
     .CompilerOptions + ' -ferror-limit=0' ;; we want to see all errors
     .CompilerOptions + ' -Ischismtracker/include'
     .CompilerOptions + ' -I$SDL_HOME$/include'
@@ -30,6 +33,11 @@ Unity('schism-unity')
     ;; TODO(uucidl): VERSION define should reflect the last commit date.
     ;; Doesn't that retrigger needless recompilation by the way?
     .CompilerOptions + ' -DVERSION=\"\"'
+    .LinkerOptions + ' /LIBPATH:$SDL_HOME$/lib/x64'
+    ;; TODO(uucidl): might this trigger recompilations too?
+    .CompilerOptions + ' -DHAS_YM3812=1'
+    .CompilerOptions + ' -DHAS_YM3526=0'
+    .CompilerOptions + ' -DHAS_Y8950=0'
 ]
 
 ObjectList('schism-split')
@@ -39,6 +47,35 @@ ObjectList('schism-split')
     .CompilerInputPattern = '*.c'
 }
 
+ObjectList('schism-win32')
+{
+    Using(.SchismConfig)
+    .CompilerInputPath = 'schismtracker/sys/win32'
+    .CompilerInputPattern = '*.c'
+}
+
+ObjectList('schism-fmt')
+{
+    Using(.SchismConfig)
+    .CompilerInputPath = 'schismtracker/fmt'
+    .CompilerInputPattern = '*.c'
+}
+
+ObjectList('schism-player')
+{
+    Using(.SchismConfig)
+    .CompilerInputPath = 'schismtracker/player'
+    .CompilerInputPattern = '*.c'
+}
+
+ObjectList('schism-stdlib')
+{
+    Using(.SchismConfig)
+    .CompilerInputFiles = {
+        'schismtracker/sys/stdlib/asprintf.c',
+    }
+}
+
 ;; It will be interesting to test once everything builds as split translation units
 ObjectList('schism')
 {
@@ -46,7 +83,17 @@ ObjectList('schism')
     .CompilerInputUnity = 'schism-unity'
 }
 
+
+
+Executable('schismtracker-win32')
+{
+    Using(.SchismConfig)
+    .Libraries = { 'schism-split', 'schism-win32', 'schism-fmt', 'schism-player', 'schism-stdlib', }
+    .LinkerOptions + ' /SUBSYSTEM:CONSOLE kernel32.lib user32.lib winmm.lib sdl.lib msvcrt.lib Ws2_32.lib shell32.lib'
+    .LinkerOutput = 'schismtracker.exe'
+}
+
 Alias('All')
 {
-    .Targets = { 'schism-split' }
+    .Targets = 'schismtracker-win32'
 }
